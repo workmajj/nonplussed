@@ -35,6 +35,29 @@ function main() {
         return $a.text().replace(/\s+/g, '') == $b.text().replace(/\s+/g, '');
     }
     
+    // Don't highlight fields that exactly match Google Plus field titles.
+    
+    function isTitle($a) {
+        fieldTitles = {
+            "Employment": true,
+            "Bragging rights": true,
+            "Occupation": true,
+            "Employment": true,
+            "Education": true,
+            "Places lived": true,
+            "Home": true,
+            "Work": true,
+            "Relationship": true,
+            "Looking for": true,
+            "Gender": true,
+            "Othernames": true,
+            "Nickname": true,
+            "Search visibility": true,
+            "Links": true
+        };
+        return $a.text() in fieldTitles;
+    }
+    
     var url = window.location.href;
     var id = url.match(/plus.google.com\/(\d+)\/about/)[1];
     var api = 'http://query.yahooapis.com/v1/public/yql?'
@@ -51,7 +74,8 @@ function main() {
         // Super efficient O(n^2) loop.
         
         $(container).find('*:visible').filter(function() {
-            return $(this).children().length < 1;
+            return $(this).children().length < 1
+                && (this.textContent || this.innerText);
         }).filter(function() {
             var isPrivate = true;
             for (var i = 0; i < external.length; i++) {
@@ -61,7 +85,7 @@ function main() {
             }
             // console.log($(this));
             // console.log(isPrivate);
-            return isPrivate;
+            return isPrivate && !isTitle($(this));
         }).css({'background-color': '#FF3'});
         
     });

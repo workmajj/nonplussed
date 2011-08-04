@@ -39,6 +39,7 @@ function main() {
     
     function isTitle($a) {
         fieldTitles = {
+            "Introduction": true,
             "Employment": true,
             "Bragging rights": true,
             "Occupation": true,
@@ -74,9 +75,17 @@ function main() {
         // Super efficient O(n^2) loop.
         
         $(container).find('*:visible').filter(function() {
-            return $(this).children().length < 1
+            
+            // Filter for leaf nodes (and the first line of the introduction,
+            // which is actually not a leaf) that contain text values.
+            
+            return ($(this).children().length < 1 || $(this).hasClass('note'))
                 && (this.textContent || this.innerText);
+            
         }).filter(function() {
+            
+            // Filter for fields that don't appear in the public profile.
+            
             var isPrivate = true;
             for (var i = 0; i < external.length; i++) {
                 if (textSimilar($(this), $(external[i]))) {
@@ -86,6 +95,7 @@ function main() {
             // console.log($(this));
             // console.log(isPrivate);
             return isPrivate && !isTitle($(this));
+            
         }).css({'background-color': '#FF3'});
         
     });

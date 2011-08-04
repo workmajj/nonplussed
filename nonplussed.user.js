@@ -77,10 +77,11 @@ function main() {
         $(container).find('*:visible').filter(function() {
             
             // Filter for leaf nodes (and the first line of the introduction,
-            // which is actually not a leaf) that contain text values.
+            // which isn't a leaf) that contain text and aren't titles.
             
             return ($(this).children().length < 1 || $(this).hasClass('note'))
-                && (this.textContent || this.innerText);
+                && (this.textContent || this.innerText)
+                && !isTitle($(this));
             
         }).filter(function() {
             
@@ -92,9 +93,9 @@ function main() {
                     isPrivate = false;
                 }
             }
-            // console.log($(this));
-            // console.log(isPrivate);
-            return isPrivate && !isTitle($(this));
+            console.log($(this));
+            console.log(isPrivate);
+            return isPrivate;
             
         }).css({'background-color': '#FF3'});
         

@@ -113,8 +113,6 @@ function main() {
                     isPrivate = false;
                 }
             }
-            // console.log($(this));
-            // console.log(isPrivate);
             return isPrivate;
             
         }).css({'background-color': '#FF3'});

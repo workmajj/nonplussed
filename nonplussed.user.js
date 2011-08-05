@@ -28,11 +28,31 @@ function addJQuery(callback) {
 
 function main() {
     
-    // Determine the text-similarity of two jQuery objects. Used to compare
-    // original field's text to possibly re-formatted text returned by API.
+    // jQuery function to determine path of an object:
+    // http://stackoverflow.com/questions/2068272/
     
-    function textSimilar($a, $b) {
-        return $a.text().replace(/\s+/g, '') == $b.text().replace(/\s+/g, '');
+    jQuery.fn.getPath = function() {
+        var path, node = this;
+        while (node.length) {
+            var realNode = node[0], name = realNode.localName;
+            if (!name) {
+                break;
+            }
+            name = name.toLowerCase();
+            if (realNode.id) {
+                return name + '#' + realNode.id + (path ? '>' + path : '');
+            }
+            else if (realNode.className) {
+                name += '.' + realNode.className.split(/\s+/).join('.');
+            }
+            var parent = node.parent(), siblings = parent.children(name);
+            if (siblings.length > 1) {
+                name += ':eq(' + siblings.index(node) + ')';
+            }
+            path = name + (path ? '>' + path : '');
+            node = parent;
+        }
+        return path;
     }
     
     // Don't highlight fields that exactly match Google Plus field titles.
@@ -89,12 +109,12 @@ function main() {
             
             var isPrivate = true;
             for (var i = 0; i < external.length; i++) {
-                if (textSimilar($(this), $(external[i]))) {
+                if ($(this).getPath() == $(external[i]).getPath()) {
                     isPrivate = false;
                 }
             }
-            console.log($(this));
-            console.log(isPrivate);
+            // console.log($(this));
+            // console.log(isPrivate);
             return isPrivate;
             
         }).css({'background-color': '#FF3'});

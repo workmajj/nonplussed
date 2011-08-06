@@ -2,11 +2,11 @@
 // @name Nonplussed
 // @namespace https://github.com/workmajj/nonplussed
 // @description Shows which private Google Plus fields folks share with you.
-// @include http://plus.google.com/*/about
-// @include https://plus.google.com/*/about
-// @match http://plus.google.com/*/about
-// @match https://plus.google.com/*/about
-// @version 0.1
+// @include http://plus.google.com/*
+// @include https://plus.google.com/*
+// @match http://plus.google.com/*
+// @match https://plus.google.com/*
+// @version 0.2
 // ==/UserScript==
 
 addJQuery(main);
@@ -27,6 +27,29 @@ function addJQuery(callback) {
 }
 
 function main() {
+    
+    // Page changes in Google Plus happen via Ajax, so the script needs to run
+    // on all Plus pages and then test whether an About section is active (the
+    // Ajax changes won't re-run the userscript). General technique cribbed
+    // from this explanation: http://stackoverflow.com/questions/3042264/
+    
+    var reloadTimer = '';
+    var isListenerInstalled = false;
+    
+    highlight();
+    
+    function reload(e) {
+        if (e.target.id && e.target.id.match(/\d+\-about\-page/))
+        {
+            if (typeof reloadTimer == "number") {
+                clearTimeout(reloadTimer);
+                reloadTimer = '';
+            }
+            reloadTimer = setTimeout(function() {
+                highlight();
+            }, 100);
+        }
+    }
     
     // jQuery function to determine path of an object:
     // http://stackoverflow.com/questions/2068272/
@@ -79,44 +102,59 @@ function main() {
         return $a.text() in fieldTitles;
     }
     
-    var url = window.location.href;
-    var id = url.match(/plus.google.com\/(\d+)\/about/)[1];
-    var api = 'http://query.yahooapis.com/v1/public/yql?'
-        + 'q=select * from html where url="' + url + '"&callback=?';
-    
-    // YQL used to get profile from external context (without cookies). Has
-    // the added benefit of being JSONP to get around cross-domain problem.
-    
-    $.getJSON(api, function(data) {
+    function highlight() {
         
-        var container = 'div#' + id + '-about-page';
-        var external = $(data.results[0]).find(container).find('*');
+        if (!isListenerInstalled) {
+            isListenerInstalled = true;
+            document.addEventListener('DOMSubtreeModified', reload, false);
+        }
         
-        // Super efficient O(n^2) loop.
+        var url = window.location.href;
         
-        $(container).find('*:visible').filter(function() {
+        if (!url.match(/plus.google.com\/\d+\/about/)) {
+            return;
+        }
+        
+        var id = url.match(/plus.google.com\/(\d+)\/about/)[1];
+        var api = 'http://query.yahooapis.com/v1/public/yql?'
+            + 'q=select * from html where url="' + url + '"&callback=?';
+        
+        // YQL used to get profile from external context (without cookies). Has
+        // the added benefit of being JSONP to get around cross-domain problem.
+        
+        $.getJSON(api, function(data) {
             
-            // Filter for leaf nodes (and the first line of the introduction,
-            // which isn't a leaf) that contain text and aren't titles.
+            var container = 'div#' + id + '-about-page';
+            var external = $(data.results[0]).find(container).find('*');
             
-            return ($(this).children().length < 1 || $(this).hasClass('note'))
-                && (this.textContent || this.innerText)
-                && !isTitle($(this));
+            // Super efficient O(n^2) loop.
             
-        }).filter(function() {
-            
-            // Filter for fields that don't appear in the public profile.
-            
-            var isPrivate = true;
-            for (var i = 0; i < external.length; i++) {
-                if ($(this).getPath() == $(external[i]).getPath()) {
-                    isPrivate = false;
+            $(container).find('*:visible').filter(function() {
+                
+                // Filter for leaf nodes (and the first line of the intro,
+                // which isn't a leaf) that contain text and aren't titles.
+                
+                return ($(this).children().length < 1
+                        || $(this).hasClass('note'))
+                    && (this.textContent || this.innerText)
+                    && !isTitle($(this));
+                
+            }).filter(function() {
+                
+                // Filter for fields that don't appear in the public profile.
+                
+                var isPrivate = true;
+                for (var i = 0; i < external.length; i++) {
+                    if ($(this).getPath() == $(external[i]).getPath()) {
+                        isPrivate = false;
+                    }
                 }
-            }
-            return isPrivate;
+                return isPrivate;
+                
+            }).css({'background-color': '#FF3'});
             
-        }).css({'background-color': '#FF3'});
+        });
         
-    });
+    }
     
 }

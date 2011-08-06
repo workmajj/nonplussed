@@ -145,10 +145,13 @@ function main() {
                 // Filter for fields that don't appear in the public profile.
                 
                 var isPrivate = true;
-                for (var i = 0; i < external.length; i++) {
+                var i = 0;
+                while (i < external.length) {
                     if ($(this).getPath() == $(external[i]).getPath()) {
                         isPrivate = false;
+                        break;
                     }
+                    i++;
                 }
                 return isPrivate;
                 

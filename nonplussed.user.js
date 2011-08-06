@@ -80,7 +80,7 @@ function main() {
     
     // Don't highlight fields that exactly match Google Plus field titles.
     
-    function isTitle($a) {
+    jQuery.fn.isTitle = function() {
         fieldTitles = {
             "Introduction": true,
             "Employment": true,
@@ -99,7 +99,7 @@ function main() {
             "Search visibility": true,
             "Links": true
         };
-        return $a.text() in fieldTitles;
+        return this.text() in fieldTitles;
     }
     
     function highlight() {
@@ -136,8 +136,8 @@ function main() {
                 
                 return ($(this).children().length < 1
                         || $(this).hasClass('note'))
-                    && (this.textContent || this.innerText)
-                    && !isTitle($(this));
+                    && $(this).text()
+                    && !$(this).isTitle();
                 
             }).filter(function() {
                 

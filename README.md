@@ -13,9 +13,9 @@ Description
 
 Nonplussed is a simple [userscript](http://wiki.greasespot.net/User_script) that runs natively in Chrome, in Firefox under [Greasemonkey](http://www.greasespot.net/), and in Safari under [GreaseKit](http://8-p.info/greasekit/).
 
-As you browse [Google Plus](https://plus.google.com/), Nonplussed highlights the private fields your contacts choose to share with you. Knowing which fields you can see lets you infer what flavor [circles](https://www.google.com/intl/en-US/+/learnmore/index.html#circles) they've placed you in. (The script does this by comparing pages you see while logged in to public versions [fetched via proxy](http://stackoverflow.com/questions/1176668/how-to-use-yql-to-retrieve-web-results).)
+As you browse [Google Plus](https://plus.google.com/), Nonplussed highlights any private fields your contacts choose to share with you. Knowing which fields you can see lets you infer what flavor [circles](https://www.google.com/intl/en-US/+/learnmore/index.html#circles) they've placed you in. (The script does this by comparing pages you see while logged in to public versions [fetched via proxy](http://stackoverflow.com/questions/1176668/how-to-use-yql-to-retrieve-web-results).)
 
-Note that the script will add HTTP resources to HTTPS pages. If your preferences disallow this, you'll need to change them to try Nonplussed.
+(The script will add HTTP resources to HTTPS pages. If your preferences disallow this, you'll need to change them in order to try Nonplussed.)
 
 Installation & Usage
 --------------------

@@ -15,18 +15,18 @@ Nonplussed is a simple [userscript](http://wiki.greasespot.net/User_script) that
 
 As you browse [Google Plus](https://plus.google.com/), Nonplussed highlights the private fields your contacts choose to share with you. Knowing which fields you can see lets you infer what flavor [circles](https://www.google.com/intl/en-US/+/learnmore/index.html#circles) they've placed you in. (The script does this by comparing pages you see while logged in to public versions [fetched via proxy](http://stackoverflow.com/questions/1176668/how-to-use-yql-to-retrieve-web-results).)
 
-Note that the script will add HTTP resources to HTTPS pages. If your preference disallow this, you'll need to change them to try Nonplussed.
+Note that the script will add HTTP resources to HTTPS pages. If your preferences disallow this, you'll need to change them to try Nonplussed.
 
 Installation & Usage
 --------------------
 
 1. [Download](https://github.com/workmajj/nonplussed/raw/master/nonplussed.user.js) the script. On Chrome you'll be prompted to install it immediately; on Firefox or Safari you'll need to get Greasemonkey or GreaseKit first.
 
-2. Log in to Google Plus.
+2. Log in to Google Plus and navigate to your own About page.
 
-3. Navigate to your own profile, where Nonplussed will highlight any non-public fields you've completed (i.e., you share all private fields with yourself).
+3. Nonplussed will highlight any non-public fields you've completed (i.e., you share all your private fields with yourself).
 
-4. Now navigate to the profiles of folks who've placed you in their circles. Any private fields they've chosen to share with you will be highlighted. If you want to confirm what the script shows, you can copy the URL of a profile into another browser (where you're not logged in) and examine the delta.
+4. Now navigate to the About pages of folks who've placed you in their circles. Any private fields they've chosen to share with you will be highlighted. If you want to confirm what the script shows, you can copy the URL of a profile into another browser (where you're not logged in) and examine the delta.
 
 [License](http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29)
 -------

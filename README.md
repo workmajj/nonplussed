@@ -15,6 +15,8 @@ Nonplussed is a simple [userscript](http://wiki.greasespot.net/User_script) that
 
 As you browse [Google Plus](https://plus.google.com/), Nonplussed highlights the private fields your contacts choose to share with you. Knowing which fields you can see lets you infer what flavor [circles](https://www.google.com/intl/en-US/+/learnmore/index.html#circles) they've placed you in. (The script does this by comparing pages you see while logged in to public versions [fetched via proxy](http://stackoverflow.com/questions/1176668/how-to-use-yql-to-retrieve-web-results).)
 
+Note that the script will add HTTP resources to HTTPS pages. If your preference disallow this, you'll need to change them to try Nonplussed.
+
 Installation & Usage
 --------------------
 

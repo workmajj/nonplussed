@@ -131,11 +131,12 @@ function main() {
             
             $(container).find('*:visible').filter(function() {
                 
-                // Filter for leaf nodes (and the first line of the intro,
-                // which isn't a leaf) that contain text and aren't titles.
+                // Filter for leaf nodes (except for the introduction, which
+                // isn't a leaf) that contain text and aren't field titles.
                 
                 return ($(this).children().length < 1
                         || $(this).hasClass('note'))
+                    && !$(this).parent().hasClass('note')
                     && $(this).text()
                     && !$(this).isTitle();
                 

@@ -127,7 +127,10 @@ function main() {
             var container = 'div#' + id + '-about-page';
             var external = $(data.results[0]).find(container).find('*');
             
-            // Super efficient O(n^2) loop.
+            var map = {};
+            external.each(function() {
+                map[$(this).getPath()] = true;
+            });
             
             $(container).find('*:visible').filter(function() {
                 
@@ -144,16 +147,7 @@ function main() {
                 
                 // Filter for fields that don't appear in the public profile.
                 
-                var isPrivate = true;
-                var i = 0;
-                while (i < external.length) {
-                    if ($(this).getPath() == $(external[i]).getPath()) {
-                        isPrivate = false;
-                        break;
-                    }
-                    i++;
-                }
-                return isPrivate;
+                return !($(this).getPath() in map);
                 
             }).css({'background-color': '#FF3'});
             

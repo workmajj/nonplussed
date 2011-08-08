@@ -6,7 +6,7 @@
 // @include https://plus.google.com/*
 // @match http://plus.google.com/*
 // @match https://plus.google.com/*
-// @version 0.3
+// @version 0.4
 // ==/UserScript==
 
 addJQuery(main);

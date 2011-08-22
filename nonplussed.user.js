@@ -4,7 +4,7 @@
 // @description Shows which private Google Plus fields folks share with you.
 // @include https://plus.google.com/*
 // @match https://plus.google.com/*
-// @version 0.4.1
+// @version 0.4.2
 // ==/UserScript==
 
 addJQuery(main);

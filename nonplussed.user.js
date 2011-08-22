@@ -111,11 +111,12 @@ function main() {
         
         var url = window.location.href;
         
-        if (!url.match(/plus.google.com\/\d+\/about/)) {
+        if (!url.match(/plus.google.com\/\d+\/about/) &&
+            !url.match(/plus.google.com\/u\/0\/\d+\/about/)) {
             return;
         }
         
-        var id = url.match(/plus.google.com\/(\d+)\/about/)[1];
+        var id = url.match(/\/(\d+)\/about/)[1];
         var api = 'http://query.yahooapis.com/v1/public/yql?'
             + 'q=select * from html where url="' + url + '"&callback=?';
         

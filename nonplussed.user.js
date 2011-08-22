@@ -110,7 +110,7 @@ function main() {
         var url = window.location.href;
         
         if (!url.match(/plus.google.com\/\d+\/about/) &&
-            !url.match(/plus.google.com\/u\/0\/\d+\/about/)) {
+            !url.match(/plus.google.com\/u\/\d+\/\d+\/about/)) {
             return;
         }
         

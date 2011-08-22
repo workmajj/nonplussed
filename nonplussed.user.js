@@ -2,11 +2,9 @@
 // @name Nonplussed
 // @namespace https://github.com/workmajj/nonplussed
 // @description Shows which private Google Plus fields folks share with you.
-// @include http://plus.google.com/*
 // @include https://plus.google.com/*
-// @match http://plus.google.com/*
 // @match https://plus.google.com/*
-// @version 0.4
+// @version 0.4.1
 // ==/UserScript==
 
 addJQuery(main);
